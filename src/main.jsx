@@ -151,10 +151,15 @@ export default class Identicon extends Component {
     return (
       <canvas
         ref={(identicon) => { this.identicon = identicon; }}
-        className="identicon"
+        className={this.props.className}
       />
     );
   }
+}
+
+
+Identicon.defaultProps = {
+  className: 'identicon',
 }
 
 Identicon.propTypes = {

@@ -188,7 +188,7 @@ var Identicon = function (_Component) {
         ref: function ref(identicon) {
           _this2.identicon = identicon;
         },
-        className: 'identicon'
+        className: this.props.className
       });
     }
   }]);
@@ -198,6 +198,10 @@ var Identicon = function (_Component) {
 
 exports.default = Identicon;
 
+
+Identicon.defaultProps = {
+  className: 'identicon'
+};
 
 Identicon.propTypes = {
   seed: _propTypes2.default.string.isRequired,
