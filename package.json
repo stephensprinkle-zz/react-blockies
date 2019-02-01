@@ -1,13 +1,13 @@
 {
   "name": "react-blockies",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Ethereum Style Identicons for React",
   "main": "dist/main.js",
-  "repository": "git@github.com:ozmeum/react-blockies.git",
-  "author": "Ozmeum",
+  "repository": "git@github.com:stephensprinkle/react-blockies.git",
+  "author": "Stephen Sprinkle",
   "license": "MIT",
   "scripts": {
-    "build": "babel src/main.jsx > dist/main.js"
+    "build": "npx babel src/main.jsx > dist/main.js"
   },
   "dependencies": {
     "prop-types": "^15.5.10"
