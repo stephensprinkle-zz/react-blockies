@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useMemo, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 // NOTE --  Majority of this code is referenced from: https://github.com/alexvandesande/blockies
@@ -68,23 +68,19 @@ function createImageData(size, random) {
   return data
 }
 
-function drawCanvas(
-  identicon,
-  scale,
-  { imageData, color, bgColor, spotColor }
-) {
+function drawCanvas(canvas, scale, { imageData, color, bgColor, spotColor }) {
   const width = Math.sqrt(imageData.length)
   const size = width * scale
 
-  identicon.width = size
-  identicon.style.width = `${size}px`
+  canvas.width = size
+  canvas.style.width = `${size}px`
 
-  identicon.height = size
-  identicon.style.height = `${size}px`
+  canvas.height = size
+  canvas.style.height = `${size}px`
 
-  const cc = identicon.getContext('2d')
+  const cc = canvas.getContext('2d')
   cc.fillStyle = bgColor
-  cc.fillRect(0, 0, identicon.width, identicon.height)
+  cc.fillRect(0, 0, canvas.width, canvas.height)
   cc.fillStyle = color
 
   for (let i = 0; i < imageData.length; i++) {
@@ -127,25 +123,37 @@ const Identicon = React.memo(function Identicon({
   spotColor,
   ...props
 }) {
-  const identiconData = generateIdenticon({
-    bgColor,
-    color,
-    seed,
-    size,
-    spotColor,
-  })
-
   const canvasRef = useRef()
 
-  if (canvasRef.current) {
-    drawCanvas(canvasRef.current, scale, identiconData)
-  }
+  // Cache identiconData so we can use it to trigger a redraw.
+  const identiconData = useMemo(
+    () =>
+      generateIdenticon({
+        bgColor,
+        color,
+        seed,
+        size,
+        spotColor,
+      }),
+    [bgColor, color, seed, size, spotColor]
+  )
+
+  // Redraw when scale or identiconData updates.
+  useEffect(() => {
+    if (canvasRef.current) {
+      drawCanvas(canvasRef.current, scale, identiconData)
+    }
+  }, [identiconData, scale])
 
   return (
     <canvas
       ref={canvas => {
         canvasRef.current = canvas
-        drawCanvas(canvas, scale, identiconData)
+
+        // Redraw when the ref updates.
+        if (canvas) {
+          drawCanvas(canvas, scale, identiconData)
+        }
       }}
       className={className}
       {...props}
