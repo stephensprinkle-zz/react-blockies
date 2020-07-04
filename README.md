@@ -19,3 +19,12 @@ export const myBlockies = () => (
   />
 )
 ```
+
+# TypeScript
+If you're working with TypeScript, add type definitions for this package installing `@types/react-blockies`
+
+```bash
+npm install @types/react-blockies
+// or
+yarn add @types/react-blockies
+```
