@@ -37,13 +37,13 @@ var Identicon = function (_Component) {
   }
 
   _createClass(Identicon, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'UNSAFE_componentDidMount',
+    value: function UNSAFE_componentDidMount() {
       this.generateIdenticon(_extends({}, this.props));
     }
   }, {
-    key: 'componentWillUpdate',
-    value: function componentWillUpdate(nextProps) {
+    key: 'UNSAFE_componentWillUpdate',
+    value: function UNSAFE_componentWillUpdate(nextProps) {
       if (!this.isEquivalent(this.props, nextProps)) this.generateIdenticon(_extends({}, nextProps));
     }
   }, {
